@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="number"], select {
+    box-sizing: border-box;  /* ensures padding and border are included in the total width */
+    width: 100%;             /* take up the full width of the parent container */
+}
+
+button {
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+#prediction-result {
+    display: flex;          /* use flexbox to display children side-by-side */
+    justify-content: space-between; /* space out the children equally */
+    align-items: center;    /* vertically align the children in the middle */
+    margin-top: 20px;
+}
+
+#prediction-result h2 {
+    margin: 0;
+}
+
+#prediction-result p#price {
+    margin: 0;
+    font-size: 24px;        /* increased font size for emphasis */
+    font-weight: bold;      /* make the price bold */
+}

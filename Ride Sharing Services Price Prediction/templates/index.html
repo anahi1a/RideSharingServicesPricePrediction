@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cab Price Prediction</title>
+    <link rel="stylesheet" href="static/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Cab Price Prediction</h1>
+
+      <form id="prediction-form">
+        <label for="distance">Distance (Miles):</label>
+        <input
+          type="number"
+          id="distance"
+          step="0.01"
+          name="distance"
+          required
+        />
+
+        <label for="cab_type">Cab Type:</label>
+        <select id="cab_type" name="cab_type">
+            {% for val in data.cab_type %}
+            {% if val != "NaN" and val != "" and val != "nan" and val != "NA" %}
+            <option value="{{ val }}">{{ val }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+
+        <label for="destination">Destination:</label>
+        <select id="destination" name="destination">
+          {% for val in data.destination %}
+          {% if val != "NaN" and val != "" and val != "nan" and val != "NA" %}
+          <option value="{{ val }}">{{ val }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+
+        <label for="source">Source:</label>
+        <select id="source" name="source">
+          {% for val in data.source %}
+          {% if val != "NaN" and val != "" and val != "nan" and val != "NA" %}
+          <option value="{{ val }}">{{ val }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+
+        <label for="surge_multiplier">Surge Multiplier:</label>
+        <select id="surge_multiplier" name="surge_multiplier">
+            {% for val in data.surge_multiplier %}
+            {% if val != "NaN" and val != "" and val != "nan" and val != "NA" %}
+            <option value="{{ val }}">{{ val }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+
+        <label for="name">Name:</label>
+        <select id="name" name="name">
+          {% for val in data.name %}
+          {% if val != "NaN" and val != "" and val != "nan" and val != "NA" %}
+          <option value="{{ val }}">{{ val }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+
+        <!-- Additional Features -->
+
+        <label for="source_temp">Source Temperature (Celsius):</label>
+        <input
+          type="number"
+          id="source_temp"
+          step="0.001"
+          name="source_temp"
+          required
+        />
+
+        <label for="source_clouds">Source Clouds:</label>
+        <input
+          type="number"
+          id="source_clouds"
+          step="0.001"
+          name="source_clouds"
+          required
+        />
+
+        <label for="source_pressure">Source Pressure:</label>
+        <input
+          type="number"
+          id="source_pressure"
+          step="0.001"
+          name="source_pressure"
+          required
+        />
+
+        <label for="source_rain">Source Rain (0 - 1):</label>
+        <input
+          type="number"
+          id="source_rain"
+          step="0.00001"
+          name="source_rain"
+          required
+        />
+
+        <label for="source_humidity">Source Humidity:</label>
+        <input
+          type="number"
+          id="source_humidity"
+          step="0.001"
+          name="source_humidity"
+          required
+        />
+
+        <label for="source_wind">Source Wind:</label>
+        <input
+          type="number"
+          id="source_wind"
+          step="0.001"
+          name="source_wind"
+          required
+        />
+
+        <label for="destination_temp"
+          >Destination Temperature (Celsius) :</label
+        >
+        <input
+          type="number"
+          id="destination_temp"
+          step="0.001"
+          name="destination_temp"
+          required
+        />
+
+        <label for="destination_clouds">Destination Clouds:</label>
+        <input
+          type="number"
+          id="destination_clouds"
+          step="0.001"
+          name="destination_clouds"
+          required
+        />
+
+        <label for="destination_pressure">Destination Pressure:</label>
+        <input
+          type="number"
+          id="destination_pressure"
+          step="0.001"
+          name="destination_pressure"
+          required
+        />
+
+        <label for="destination_rain">Destination Rain (0 - 1):</label>
+        <input
+          type="number"
+          id="destination_rain"
+          step="0.00001"
+          name="destination_rain"
+          required
+        />
+
+        <label for="destination_humidity">Destination Humidity:</label>
+        <input
+          type="number"
+          id="destination_humidity"
+          step="0.001"
+          name="destination_humidity"
+          required
+        />
+
+        <label for="destination_wind">Destination Wind:</label>
+        <input
+          type="number"
+          id="destination_wind"
+          step="0.001"
+          name="destination_wind"
+          required
+        />
+
+        <button type="submit">Predict</button>
+      </form>
+
+      <div id="prediction-result">
+        <h2>Predicted Price:</h2>
+        <p id="price"></p>
+      </div>
+    </div>
+
+    <script>
+      function updateDistance() {
+        const source = $("#source").val();
+        const destination = $("#destination").val();
+        $.post(
+          "/get-distance",
+          { source: source, destination: destination },
+          function (data) {
+            $("#distance").val(data.distance);
+          }
+        );
+      }
+
+      $(document).ready(function () {
+        $("#source, #destination").change(updateDistance);
+
+        $("#prediction-form").submit(function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          const formData = $(this).serialize();
+
+          $.post("/predict", formData, function (data) {
+            $("#price").text("$" + data.price.toFixed(2));
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
