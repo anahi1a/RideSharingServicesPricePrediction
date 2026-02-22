@@ -47,7 +47,7 @@ This project combines ride data with weather data to improve prediction accuracy
 - Flask backend for prediction API
 - HTML + CSS frontend
 
-##  Running the Project
+##  Steps
 
 ### 1. Install Dependencies
 
