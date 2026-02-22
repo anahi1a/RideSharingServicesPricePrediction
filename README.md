@@ -20,6 +20,20 @@ This project combines ride data with weather data to improve prediction accuracy
 
 ---
 
+## Dataset
+
+The dataset used for this project is publicly available on Kaggle:
+
+Uber & Lyft Cab Prices Dataset  
+https://www.kaggle.com/datasets/ravi72munde/uber-lyft-cab-prices?resource=download
+
+Please download the dataset manually and place the following files in the project root directory:
+
+- `cab_rides.csv`
+- `weather.csv`
+
+---
+
 ## Methodology
 
 ### 1. Data Integration
